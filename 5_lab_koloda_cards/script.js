@@ -1,23 +1,29 @@
+const PLACEHOLDER = 'images/placeholder.jpg';
+
 class Card {
-    constructor(name, type, description, effect, imagePath = 'images/placeholder.jpg') {
+    constructor(name, type, description, effect, imagePath) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.effect = effect;
-        this.imagePath = imagePath;
+        this.imagePath = imagePath || PLACEHOLDER;
         this.id = Date.now() + Math.random().toString(36).substr(2, 9);
     }
- 
+
+    _imgSrc() {
+        return this.imagePath && this.imagePath.trim() ? this.imagePath : PLACEHOLDER;
+    }
+
     getFrontHTML() {
         return `
             <div class="card-front">
                 <div class="card-image">
-                    <img src="${this.imagePath}" alt="${this.name}" onerror="this.src='images/placeholder.png'">
+                    <img src="${this._imgSrc()}" alt="${this.name}"
+                         onerror="this.src='${PLACEHOLDER}'">
                 </div>
-            </div>
-        `;
+            </div>`;
     }
- 
+
     getBackHTML() {
         return `
             <div class="card-back">
@@ -25,10 +31,9 @@ class Card {
                 <div class="card-type">${this.type}</div>
                 <div class="card-description">${this.description}</div>
                 <div class="card-effect">${this.effect}</div>
-            </div>
-        `;
+            </div>`;
     }
- 
+
     getHTML() {
         return `
             <div class="card-container" data-id="${this.id}" onclick="this.classList.toggle('flipped')">
@@ -36,11 +41,10 @@ class Card {
                     ${this.getFrontHTML()}
                     ${this.getBackHTML()}
                 </div>
-            </div>
-        `;
+            </div>`;
     }
 }
- 
+
 class QueenCard extends Card {
     constructor(name, description, effect, imagePath, points) {
         super(name, "Королева", description, effect, imagePath);
@@ -53,11 +57,10 @@ class QueenCard extends Card {
                 <div class="card-type">Королева · ${this.points} очков</div>
                 <div class="card-description">${this.description}</div>
                 <div class="card-effect">${this.effect}</div>
-            </div>
-        `;
+            </div>`;
     }
 }
- 
+
 class KingJesterCard extends Card {
     constructor(name, description, effect, imagePath, action) {
         super(name, "Король / Шут", description, effect, imagePath);
@@ -70,11 +73,10 @@ class KingJesterCard extends Card {
                 <div class="card-type">Действие</div>
                 <div class="card-description">${this.description}</div>
                 <div class="card-effect">${this.action}</div>
-            </div>
-        `;
+            </div>`;
     }
 }
- 
+
 class MagicItemCard extends Card {
     constructor(name, description, effect, imagePath, magicType) {
         super(name, "Волшебный предмет", description, effect, imagePath);
@@ -87,11 +89,10 @@ class MagicItemCard extends Card {
                 <div class="card-type">${this.magicType}</div>
                 <div class="card-description">${this.description}</div>
                 <div class="card-effect">${this.effect}</div>
-            </div>
-        `;
+            </div>`;
     }
 }
- 
+
 const initialDeck = [
     new KingJesterCard(
         "Шут",
@@ -118,7 +119,8 @@ const initialDeck = [
         "Волшебная Палочка",
         "Защищает от магии сна",
         "Может остановить действие Сонного Зелья",
-        "images/magicstick.jpg","Защита"
+        "images/magicstick.jpg",
+        "Защита"
     ),
     new Card(
         "8 Подсолнухов",
@@ -127,7 +129,6 @@ const initialDeck = [
         "Можно сбросить с другими картами, составляя уравнения (2+6=8, 3+5=8, 4+4=8 и т.д.)",
         "images/podsolnuh.jpg"
     ),
- 
     new QueenCard(
         "Королева Кошек",
         "Гордая и независимая — не терпит собак рядом с собой.",
@@ -135,7 +136,6 @@ const initialDeck = [
         "images/cat.jpg",
         15
     ),
- 
     new KingJesterCard(
         "Рыцарь",
         "Бесстрашный воин, способный забрать чужую принцессу.",
@@ -143,7 +143,6 @@ const initialDeck = [
         "images/knight.jpg",
         "Укради принцессу"
     ),
- 
     new KingJesterCard(
         "Дракон",
         "Верный страж, защищающий принцессу от похищения.",
@@ -151,7 +150,6 @@ const initialDeck = [
         "images/dragon.jpg",
         "Защити принцессу"
     ),
- 
     new MagicItemCard(
         "Сонное Зелье",
         "Коварное зелье, погружающее принцессу обратно в сон.",
@@ -160,7 +158,7 @@ const initialDeck = [
         "Сонное зелье"
     )
 ];
- 
+
 let deck = [];
 
 function loadFromStorage() {
@@ -184,126 +182,127 @@ function loadFromStorage() {
         deck = [...initialDeck];
     }
 }
- 
+
 function saveToStorage() {
     const data = deck.map(c => ({
-        cardClass: c.constructor.name,
-        name: c.name, type: c.type,
-        description: c.description, effect: c.effect,
-        imagePath: c.imagePath,
-        points: c.points, action: c.action, magicType: c.magicType
+        cardClass:   c.constructor.name,
+        name:        c.name,
+        type:        c.type,
+        description: c.description,
+        effect:      c.effect,
+        imagePath:   c.imagePath,
+        points:      c.points,
+        action:      c.action,
+        magicType:   c.magicType
     }));
     localStorage.setItem('sleepingQueensDeck', JSON.stringify(data));
 }
- 
- 
-function renderEditGrid() {
-    const cardTypeNames = {
-        'Card': 'Обычная карта',
-        'QueenCard': 'Королева',
-        'KingJesterCard': 'Король / Шут',
-        'MagicItemCard': 'Волшебный предмет'
-    };
- 
-    const editCardsHTML = deck.map((card, index) => `
-        <div class="edit-card" data-index="${index}">
-            <button class="remove-card" onclick="removeCard(${index})">×</button>
-            <h3>${card.name}</h3>
- 
-            <label>Название</label>
-            <input type="text" class="edit-name"
 
-
-value="${escHtml(card.name)}" placeholder="Название">
- 
-            <label>Тип карты</label>
-            <select class="edit-card-class">
-                ${Object.entries(cardTypeNames).map(([val, label]) =>
-                    `<option value="${val}" ${card.constructor.name === val ? 'selected' : ''}>${label}</option>`
-                ).join('')}
-            </select>
- 
-            <label>Описание</label>
-            <textarea class="edit-description" placeholder="Описание">${escHtml(card.description || '')}</textarea>
- 
-            <label>Эффект / Действие</label>
-            <textarea class="edit-effect" placeholder="Эффект">${escHtml(card.effect || '')}</textarea>
- 
-            <label>Путь к изображению</label>
-            <input type="text" class="edit-image" value="${escHtml(card.imagePath)}" placeholder="images/card.jpg">
-            <div class="image-path">${escHtml(card.imagePath)}</div>
-        </div>
-    `).join('');
- 
-    document.getElementById('editGrid').innerHTML = editCardsHTML;
-}
- 
 function escHtml(str) {
-    return String(str)
+    return String(str || '')
         .replace(/&/g, '&amp;')
         .replace(/"/g, '&quot;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
 }
 
-function openModal() {
-    renderEditGrid();
-    document.getElementById('editModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
- 
-function closeModal() {
-    document.getElementById('editModal').classList.remove('open');
-    document.body.style.overflow = '';
+
+function validateEditCard(ec) {
+    const errors = [];
+
+    const fields = [
+        { sel: '.edit-name',        label: 'Название' },
+        { sel: '.edit-description', label: 'Описание' },
+        { sel: '.edit-effect',      label: 'Эффект / Действие' }
+    ];
+
+    fields.forEach(({ sel, label }) => {
+        const el = ec.querySelector(sel);
+        const empty = !el.value.trim();
+        el.classList.toggle('field-error', empty);
+        if (empty) errors.push(`«${label}» не может быть пустым`);
+    });
+
+    return errors;
 }
 
-window.addNewCard = function () {
-    deck.push(new Card(
-        "Новая карта",
-        "Обычная карта",
-        "Описание новой карты",
-        "Эффект карты",
-        "images/placeholder.png"
-    ));
-    renderEditGrid();
+function showCardErrors(ec, errors) {
+    let box = ec.querySelector('.validation-errors');
+    if (!box) {
+        box = document.createElement('div');
+        box.className = 'validation-errors';
+        const h3 = ec.querySelector('h3');
+        h3 ? h3.after(box) : ec.prepend(box);
+    }
+    if (errors.length) {
+        box.innerHTML = errors.map(e => `<span>${e}</span>`).join('');
+        box.style.display = 'block';
+    } else {
+        box.style.display = 'none';
+    }
+}
+const cardTypeNames = {
+    'Card':           'Обычная карта',
+    'QueenCard':      'Королева',
+    'KingJesterCard': 'Король / Шут',
+    'MagicItemCard':  'Волшебный предмет'
 };
 
-window.removeCard = function (index) {
-    if (deck.length > 1) {
-        deck.splice(index, 1);
-        renderEditGrid();
-    } else {
-        alert('Колода должна содержать хотя бы одну карту!');
+function renderEditGrid() {
+    document.getElementById('editGrid').innerHTML = deck.map((card, index) => `
+        <div class="edit-card" data-index="${index}">
+            <button class="remove-card" onclick="removeCard(${index})" title="Удалить карту">×</button>
+            <h3>${escHtml(card.name) || 'Новая карта'}</h3>
+
+            <label>Название <span class="req">*</span></label>
+            <input type="text" class="edit-name"
+                   value="${escHtml(card.name)}"
+                   placeholder="Название карты"
+                   oninput="clearFieldError(this)">
+
+            <label>Тип карты</label>
+            <select class="edit-card-class">
+                ${Object.entries(cardTypeNames).map(([val, label]) =>
+                    `<option value="${val}" ${card.constructor.name === val ? 'selected' : ''}>${label}</option>`
+                ).join('')}
+            </select>
+
+            <label>Описание <span class="req">*</span></label>
+            <textarea class="edit-description"
+                      placeholder="Описание карты"
+                      oninput="clearFieldError(this)">${escHtml(card.description || '')}</textarea>
+
+            <label>Эффект / Действие <span class="req">*</span></label>
+            <textarea class="edit-effect"
+                      placeholder="Эффект или действие"
+                      oninput="clearFieldError(this)">${escHtml(card.effect || '')}</textarea>
+
+            <label>Путь к изображению</label>
+            <input type="text" class="edit-image"
+                   value="${escHtml(card.imagePath === PLACEHOLDER ? '' : card.imagePath)}"
+                   placeholder="images/card.jpg (необязательно)">
+            <div class="image-path">${card.imagePath === PLACEHOLDER ? '—' : escHtml(card.imagePath)}</div>
+        </div>
+    `).join('');
+}
+
+window.clearFieldError = function(el) {
+    el.classList.remove('field-error');
+    const box = el.closest('.edit-card')?.querySelector('.validation-errors');
+    if (box) {
+        const label = el.classList.contains('edit-name')        ? 'Название'
+                    : el.classList.contains('edit-description')  ? 'Описание'
+                    : el.classList.contains('edit-effect')       ? 'Эффект / Действие'
+                    : null;
+        if (label && box.innerHTML) {
+            box.innerHTML = box.innerHTML
+                .split('\n')
+                .filter(l => !l.includes(`«${label}»`))
+                .join('\n');
+            if (!box.textContent.trim()) box.style.display = 'none';
+        }
     }
 };
-
-window.saveChanges = function () {
-    const editCards = document.querySelectorAll('.edit-card');
-    const newDeck = [];
- 
-    editCards.forEach(ec => {
-        const name        = ec.querySelector('.edit-name').value;
-        const cardClass   = ec.querySelector('.edit-card-class').value;
-        const description = ec.querySelector('.edit-description').value;
-        const effect      = ec.querySelector('.edit-effect').value;
-        const imagePath   = ec.querySelector('.edit-image').value;
- 
-        let card;
-        switch (cardClass) {
-            case 'QueenCard':      card = new QueenCard(name, description, effect, imagePath, 5); break;
-            case 'KingJesterCard': card = new KingJesterCard(name, description, effect, imagePath, "Действие"); break;
-            case 'MagicItemCard':  card = new MagicItemCard(name, description, effect, imagePath, "Магия"); break;
-            default:               card = new Card(name, "Обычная карта", description, effect, imagePath);
-        }
-        newDeck.push(card);
-    });
- 
-    deck = newDeck;
-    saveToStorage();
-    switchMode('view');
-};
-
-let currentMode = 'view';
 
 function buildDOM() {
     const deco = document.createElement('div');
@@ -313,15 +312,14 @@ function buildDOM() {
         <div class="petals-container" id="petals"></div>
     `;
     document.body.appendChild(deco);
- 
+
     const header = document.createElement('header');
     header.innerHTML = `
-        <h1> Спящие Королевы </h1>
-        <nav><button id="editModeBtn">Редактировать</button>
-        </nav>
+        <h1>Спящие Королевы</h1>
+        <nav><button id="editModeBtn">Редактировать</button></nav>
     `;
     document.body.appendChild(header);
- 
+
     const main = document.createElement('main');
     main.id = 'mainContent';
     document.body.appendChild(main);
@@ -330,33 +328,25 @@ function buildDOM() {
 function renderViewMode() {
     const main = document.getElementById('mainContent');
     main.innerHTML = '';
- 
+
     const container = document.createElement('div');
     container.className = 'cards-container';
- 
+
     const perRow = 3;
     for (let i = 0; i < deck.length; i += perRow) {
         const row = document.createElement('div');
         row.className = 'row';
-        deck.slice(i, i + perRow).forEach(card => {
-            row.innerHTML += card.getHTML();
-        });
+        deck.slice(i, i + perRow).forEach(card => { row.innerHTML += card.getHTML(); });
         container.appendChild(row);
     }
     main.appendChild(container);
 }
 
+
 function renderEditMode() {
     const main = document.getElementById('mainContent');
     main.innerHTML = '';
- 
-    const cardTypeNames = {
-        'Card': 'Обычная карта',
-        'QueenCard': 'Королева',
-        'KingJesterCard': 'Король / Шут',
-        'MagicItemCard': 'Волшебный предмет'
-    };
- 
+
     const toolbar = document.createElement('div');
     toolbar.className = 'edit-toolbar';
     toolbar.innerHTML = `
@@ -364,53 +354,16 @@ function renderEditMode() {
         <button onclick="saveChanges()" class="save-btn">Сохранить</button>
     `;
     main.appendChild(toolbar);
- 
+
     const grid = document.createElement('div');
     grid.className = 'edit-grid';
     grid.id = 'editGrid';
     main.appendChild(grid);
- 
+
     renderEditGrid();
 }
 
-function renderEditGrid() {
-    const cardTypeNames = {
-        'Card': 'Обычная карта',
-        'QueenCard': 'Королева',
-        'KingJesterCard': 'Король / Шут',
-        'MagicItemCard': 'Волшебный предмет'
-    };
- 
-    document.getElementById('editGrid').innerHTML = deck.map((card, index) => `
-        <div class="edit-card" data-index="${index}">
-            <button class="remove-card" onclick="removeCard(${index})">×</button>
-            <h3>${card.name}</h3>
-            <label>Название</label>
-            <input type="text" class="edit-name" value="${escHtml(card.name)}" placeholder="Название">
-            <label>Тип карты</label>
-            <select class="edit-card-class">
-                ${Object.entries(cardTypeNames).map(([val, label]) =>
-                    `<option value="${val}" ${card.constructor.name === val ? 'selected' : ''}>${label}</option>`
-                ).join('')}
-            </select>
-            <label>Описание</label>
-            <textarea class="edit-description" placeholder="Описание">${escHtml(card.description || '')}</textarea>
-            <label>Эффект / Действие</label>
-            <textarea class="edit-effect" placeholder="Эффект">${escHtml(card.effect || '')}</textarea>
-            <label>Путь к изображению</label>
-            <input type="text" class="edit-image" value="${escHtml(card.imagePath)}" placeholder="images/card.jpg">
-            <div class="image-path">${escHtml(card.imagePath)}</div>
-        </div>
-    `).join('');
-}
- 
-function escHtml(str) {
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-}
+let currentMode = 'view';
 
 function switchMode(mode) {
     currentMode = mode;
@@ -428,13 +381,19 @@ function switchMode(mode) {
 
 window.addNewCard = function () {
     deck.push(new Card(
-        "Новая карта",
+        "",            
         "Обычная карта",
-        "Описание новой карты",
-        "Эффект карты",
-        "images/placeholder.png"
+        "",
+        "",
+        PLACEHOLDER
     ));
     renderEditGrid();
+    const cards = document.querySelectorAll('.edit-card');
+    const last = cards[cards.length - 1];
+    if (last) {
+        last.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => last.querySelector('.edit-name')?.focus(), 300);
+    }
 };
 
 window.removeCard = function (index) {
@@ -448,25 +407,46 @@ window.removeCard = function (index) {
 
 window.saveChanges = function () {
     const editCards = document.querySelectorAll('.edit-card');
-    const newDeck = [];
- 
+    let hasErrors = false;
+
     editCards.forEach(ec => {
-        const name        = ec.querySelector('.edit-name').value;
+        const errors = validateEditCard(ec);
+        showCardErrors(ec, errors);
+        if (errors.length) hasErrors = true;
+    });
+
+    if (hasErrors) {
+        const firstBad = document.querySelector('.edit-card .field-error');
+        firstBad?.closest('.edit-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+
+    const newDeck = [];
+    editCards.forEach(ec => {
+        const name        = ec.querySelector('.edit-name').value.trim();
         const cardClass   = ec.querySelector('.edit-card-class').value;
-        const description = ec.querySelector('.edit-description').value;
-        const effect      = ec.querySelector('.edit-effect').value;
-        const imagePath   = ec.querySelector('.edit-image').value;
- 
+        const description = ec.querySelector('.edit-description').value.trim();
+        const effect      = ec.querySelector('.edit-effect').value.trim();
+        const rawImage    = ec.querySelector('.edit-image').value.trim();
+        const imagePath   = rawImage || PLACEHOLDER;
+
         let card;
         switch (cardClass) {
-            case 'QueenCard':      card = new QueenCard(name, description, effect, imagePath, 5); break;
-            case 'KingJesterCard': card = new KingJesterCard(name, description, effect, imagePath, effect); break;
-            case 'MagicItemCard':  card = new MagicItemCard(name, description, effect, imagePath, "Магия"); break;
-            default:               card = new Card(name, "Обычная карта", description, effect, imagePath);
+            case 'QueenCard':
+                card = new QueenCard(name, description, effect, imagePath, 5);
+                break;
+            case 'KingJesterCard':
+                card = new KingJesterCard(name, description, effect, imagePath, effect);
+                break;
+            case 'MagicItemCard':
+                card = new MagicItemCard(name, description, effect, imagePath, "Магия");
+                break;
+            default:
+                card = new Card(name, "Обычная карта", description, effect, imagePath);
         }
         newDeck.push(card);
     });
- 
+
     deck = newDeck;
     saveToStorage();
     switchMode('view');
@@ -494,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFromStorage();
     spawnPetals();
     switchMode('view');
- 
+
     document.getElementById('editModeBtn').addEventListener('click', () => {
         switchMode(currentMode === 'view' ? 'edit' : 'view');
     });
