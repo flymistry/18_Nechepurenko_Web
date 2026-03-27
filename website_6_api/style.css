@@ -1,5 +1,3 @@
-/* ─── Сброс и базовые стили ─────────────────────────────────────────────────── */
-
 * {
     margin: 0;
     padding: 0;
@@ -62,9 +60,6 @@ a:hover {
     color: #FFD67A;
 }
 
-
-/* ─── Шапка ─────────────────────────────────────────────────────────────────── */
-
 header {
     background: rgba(26, 26, 26, 0.95);
     backdrop-filter: blur(10px);
@@ -120,9 +115,6 @@ nav a.active {
     color: #FFBA87;
 }
 
-
-/* ─── Кнопки ─────────────────────────────────────────────────────────────────── */
-
 button,
 .btn {
     background: linear-gradient(135deg, #C59BA7, #E9A5A2);
@@ -151,9 +143,6 @@ button:active,
     transform: translateY(0);
 }
 
-
-/* ─── Инпуты ─────────────────────────────────────────────────────────────────── */
-
 input,
 select,
 textarea {
@@ -168,7 +157,6 @@ textarea {
     width: 100%;
 }
 
-/* Фикс: option всегда тёмный фон + светлый текст */
 select option {
     background: #2A2A2A;
     color: #E5E5E5;
@@ -188,9 +176,6 @@ textarea:focus {
     background: rgba(255, 255, 255, 0.1);
 }
 
-
-/* ─── Секции ─────────────────────────────────────────────────────────────────── */
-
 .section {
     padding: 0 2rem 5rem;
     max-width: 1280px;
@@ -202,7 +187,6 @@ textarea:focus {
     display: none;
 }
 
-/* Вспомогательные контейнеры контента внутри секций */
 .section-content {
     max-width: 480px;
     margin: 2.5rem auto 0;
@@ -218,8 +202,6 @@ textarea:focus {
     gap: 1rem;
 }
 
-
-/* ─── Hero-блок ──────────────────────────────────────────────────────────────── */
 
 .hero {
     text-align: center;
@@ -237,16 +219,10 @@ textarea:focus {
     color: #CCCCCC;
 }
 
-
-/* ─── Зона результатов ───────────────────────────────────────────────────────── */
-
 .result-area {
     max-width: 600px;
     margin: 2rem auto 0;
 }
-
-
-/* ─── Карточки результатов ───────────────────────────────────────────────────── */
 
 .result-card {
     background: linear-gradient(135deg, rgba(144, 129, 158, 0.1), rgba(233, 165, 162, 0.1));
@@ -259,8 +235,6 @@ textarea:focus {
 }
 
 
-/* ─── Шутки ──────────────────────────────────────────────────────────────────── */
-
 .joke-setup {
     font-size: 1.15rem;
     font-weight: 600;
@@ -272,9 +246,6 @@ textarea:focus {
     font-size: 1.05rem;
     color: #FFBA87;
 }
-
-
-/* ─── Погода ─────────────────────────────────────────────────────────────────── */
 
 .weather-card {
     text-align: center;
@@ -318,8 +289,6 @@ textarea:focus {
     color: #FFFFFF;
 }
 
-
-/* ─── Конвертер валют ────────────────────────────────────────────────────────── */
 
 .currency-card {
     max-width: 480px;
@@ -400,9 +369,6 @@ textarea:focus {
     color: #E5E5E5;
 }
 
-
-/* ─── Книги ──────────────────────────────────────────────────────────────────── */
-
 .books-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -447,9 +413,6 @@ textarea:focus {
     color: #888;
 }
 
-
-/* ─── Собаки ─────────────────────────────────────────────────────────────────── */
-
 .dog-card {
     display: flex;
     flex-direction: column;
@@ -481,9 +444,6 @@ textarea:focus {
     font-size: 0.82rem;
     margin-top: 0.25rem;
 }
-
-
-/* ─── Состояния: загрузка / ошибка / успех ───────────────────────────────────── */
 
 .loading {
     color: #FFBA87;
@@ -522,9 +482,6 @@ textarea:focus {
     border-left: 3px solid #FFD67A;
 }
 
-
-/* ─── Анимации ───────────────────────────────────────────────────────────────── */
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -548,9 +505,6 @@ textarea:focus {
     50%   { opacity: 1; }
 }
 
-
-/* ─── Скроллбар ──────────────────────────────────────────────────────────────── */
-
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -569,8 +523,6 @@ textarea:focus {
     background: linear-gradient(135deg, #E9A5A2, #FFBA87);
 }
 
-
-/* ─── Адаптив ────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
     header {
