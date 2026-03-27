@@ -1,5 +1,3 @@
-// ─── Навигация ───────────────────────────────────────────────────────────────
-
 function showSection(id) {
     document.querySelectorAll(".section").forEach(sec => sec.classList.add("hidden"));
     document.getElementById(id).classList.remove("hidden");
@@ -8,9 +6,6 @@ function showSection(id) {
     const activeLink = document.querySelector(`nav a[onclick*="${id}"]`);
     if (activeLink) activeLink.classList.add("active");
 }
-
-
-// ─── Шутки (GET) ─────────────────────────────────────────────────────────────
 
 async function getJoke() {
     const result = document.getElementById("jokeResult");
@@ -32,9 +27,6 @@ async function getJoke() {
         console.error("Joke API Error:", err);
     }
 }
-
-
-// ─── Погода (GET) ─────────────────────────────────────────────────────────────
 
 async function getWeather() {
     const result = document.getElementById("weatherResult");
@@ -87,9 +79,6 @@ function getWindDirection(deg) {
     return dirs[Math.round(deg / 45) % 8];
 }
 
-
-// ─── Конвертер валют (GET, exchangerate-api.com) ──────────────────────────────
-
 async function convertCurrency() {
     const result = document.getElementById("currencyResult");
     const amount = parseFloat(document.getElementById("currencyAmount").value);
@@ -109,7 +98,6 @@ async function convertCurrency() {
     result.innerHTML = "<p class='loading'>Загружаем курс...</p>";
 
     try {
-        // GET-запрос: получаем все курсы относительно базовой валюты
         const res = await fetch(`https://open.er-api.com/v6/latest/${from}`);
         if (!res.ok) throw new Error("Ошибка API: " + res.status);
 
@@ -120,7 +108,6 @@ async function convertCurrency() {
         const converted = (amount * rate).toFixed(2);
         const updated   = new Date(data.time_last_update_utc).toLocaleDateString("ru-RU");
 
-        // Показываем топ-5 популярных валют заодно
         const popular = ["USD", "EUR", "GBP", "JPY", "CHF"].filter(c => c !== from);
         const extraRates = popular.map(code => `
             <div class="currency-extra-row">
@@ -152,8 +139,6 @@ async function convertCurrency() {
 }
 
 
-// ─── Книги Стивена Кинга (GET) ───────────────────────────────────────────────
-
 async function getBooks() {
     const result = document.getElementById("booksResult");
     result.innerHTML = "<p class='loading'>Загрузка книг...</p>";
@@ -181,9 +166,6 @@ async function getBooks() {
         console.error(err);
     }
 }
-
-
-// ─── Собаки (GET) ─────────────────────────────────────────────────────────────
 
 async function getRandomDog() {
     const result = document.getElementById("dogResult");
