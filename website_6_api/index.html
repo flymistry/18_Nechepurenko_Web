@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>API</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="logo">API</div>
+    <nav>
+        <a href="#" onclick="showSection('jokes')" class="active">Шутки</a>
+        <a href="#" onclick="showSection('weather')">Погода</a>
+        <a href="#" onclick="showSection('currency')">Валюта</a>
+        <a href="#" onclick="showSection('books')">Книги</a>
+        <a href="#" onclick="showSection('dogs')">Собаки</a>
+        <a href="#" onclick="showSection('threads')">Обсуждения</a>
+    </nav>
+</header>
+
+<main>
+
+    <section id="jokes" class="section">
+        <div class="hero">
+            <h1>Случайная шутка</h1>
+            <p>Нажми кнопку, чтобы получить новую шутку</p>
+        </div>
+        <div class="section-content centered">
+            <button onclick="getJoke()" class="btn">Получить шутку</button>
+            <div id="jokeResult" class="result-area"></div>
+        </div>
+    </section>
+
+    <section id="weather" class="section hidden">
+        <div class="hero">
+            <h1>Погода сейчас</h1>
+            <p>Введите координаты, чтобы увидеть погоду</p>
+        </div>
+        <div class="section-content form-column">
+            <input type="number" id="latitude" placeholder="Широта (например, 48.21)">
+            <input type="number" id="longitude" placeholder="Долгота (например, 16.37)">
+            <button onclick="getWeather()" class="btn">Получить погоду</button>
+        </div>
+        <div id="weatherResult" class="result-area"></div>
+    </section>
+
+    <section id="currency" class="section hidden">
+        <div class="hero">
+            <h1>Конвертер валют</h1>
+        </div>
+        <div class="section-content form-column">
+            <input type="number" id="currencyAmount" placeholder="Сумма" value="100">
+            <select id="currencyFrom">
+                <option value="USD">USD — Доллар США</option>
+                <option value="EUR">EUR — Евро</option>
+                <option value="GBP">GBP — Фунт стерлингов</option>
+                <option value="UAH">UAH — Гривна</option>
+                <option value="RUB">RUB — Рубль</option>
+                <option value="PLN">PLN — Злотый</option>
+                <option value="CHF">CHF — Франк</option>
+                <option value="JPY">JPY — Иена</option>
+            </select>
+            <select id="currencyTo">
+                <option value="EUR">EUR — Евро</option>
+                <option value="USD">USD — Доллар США</option>
+                <option value="GBP">GBP — Фунт стерлингов</option>
+                <option value="UAH">UAH — Гривна</option>
+                <option value="RUB">RUB — Рубль</option>
+                <option value="PLN">PLN — Злотый</option>
+                <option value="CHF">CHF — Франк</option>
+                <option value="JPY">JPY — Иена</option>
+            </select>
+            <button onclick="convertCurrency()" class="btn">Конвертировать</button>
+        </div>
+        <div id="currencyResult" class="result-area"></div>
+    </section>
+
+    <section id="books" class="section hidden">
+        <div class="hero">
+            <h1>Книги Стивена Кинга</h1>
+            <p>Загрузи список книг через API</p>
+        </div>
+        <div class="section-content centered">
+            <button onclick="getBooks()" class="btn">Загрузить список книг</button>
+        </div>
+        <div id="booksResult" class="result-area"></div>
+    </section>
+
+    <section id="dogs" class="section hidden">
+        <div class="hero">
+            <h1>Случайные собаки</h1>
+            <p>Нажми кнопку, чтобы увидеть новую собаку</p>
+        </div>
+        <div class="section-content centered">
+            <button onclick="getRandomDog()" class="btn">Показать собаку</button>
+            <div id="dogResult" class="result-area"></div>
+        </div>
+    </section>
+
+    <section id="threads" class="section hidden">
+        <div class="hero">
+            <h1>Обсуждения</h1>
+            <p>Создавай посты, редактируй и удаляй йоу</p>
+    </div>
+
+    <div class="section-content" style="max-width: 800px; margin: 0 auto;">
+        <div class="form-column" style="margin-bottom: 2rem;">
+            <input type="text" id="new-title" placeholder="Заголовок обсуждения" maxlength="120">
+            <textarea id="new-body" placeholder="Текст обсуждения..." rows="4"></textarea>
+            <button onclick="createThread()" class="btn" id="publishBtn">Опубликовать</button>
+        </div>
+
+        <button onclick="loadThreads()" class="btn" style="margin-bottom: 1.5rem; width: 100%;">
+            Загрузить обсуждения (GET)
+        </button>
+
+        <div id="threads-list" class="result-area"></div>
+        <div id="threads-status"></div>
+    </div>
+</section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
