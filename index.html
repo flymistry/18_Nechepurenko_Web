@@ -2,162 +2,127 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Последний "употреблённый" контент Полиной Нечепуренко КС-20</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>API</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Последний просмотренный контент</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Главная</a></li>
-                <li><a href="#shutki">Шутки</a></li>
-                <li><a href="#sujet">Описание</a></li>
-                <li><a href="#otzyv">Отзыв</a></li>
-                <li><a href="#cytaty">Цитаты</a></li>
-                <li><a href="#rpl">Расписание матчей РПЛ</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-       
-        <section id="shutki" class="jokes-section">
-            <h2>Шутки</h2>
-            
-            <article class="joke">
-                <div class="joke-container">
-                    <div class="joke-text">
-                        <p>— Почему ты такой грустный?</p>
-                        <p>— Моя жена уезжает к морю на три недели.</p>
-                        <p>— Тогда я тебя не понимаю.</p>
-                        <p>— Если я не буду грустным — она передумает.</p>
-                    </div>
-                    <img src="images/собакен.jpg" alt="дурак" class="joke-img">
-                </div>
-            </article>
-            
-            <article class="joke">
-                <div class="joke-container">
-                    <div class="joke-text">
-                        <p>Мужчины!</p>
-                        <p>Если с утра у вас плохое настроение, <br>значит, <br>вы встали не с той... <br>ну... <br>не с той вы встали!</p>
-                    </div>
-                    <img src="images/анджела.jpg" alt="сприцепом" class="joke-img">
-                </div>
-            </article>
-            
-            <article class="joke">
-                <div class="joke-container">
-                    <div class="joke-text">
-                        <p>За последние три года я уже раз пять обещал на ней жениться, а ей всё мало…</p>
-                    </div>
-                    <img src="images/мужик.jpg" alt="сперматозоид" class="joke-img">
-                </div>
-            </article>
-        </section>
+<header>
+    <div class="logo">API</div>
+    <nav>
+        <a href="#" onclick="showSection('jokes')" class="active">Шутки</a>
+        <a href="#" onclick="showSection('weather')">Погода</a>
+        <a href="#" onclick="showSection('currency')">Валюта</a>
+        <a href="#" onclick="showSection('books')">Книги</a>
+        <a href="#" onclick="showSection('dogs')">Собаки</a>
+        <a href="#" onclick="showSection('threads')">Обсуждения</a>
+    </nav>
+</header>
 
-        
-        <section id = "sujet">
-            <h2>Сюжет триллера "Горничная"</h2>
-            <article>
-                <p>Милли мечтает начать жизнь с чистого листа и с радостью принимает работу горничной
-                    в роскошном особняке семьи Винчестер.
-                    Но за закрытыми дверями и странными правилами скрывается нечто зловещее.
-                    Чем ближе Милли подбирается к шокирующей разгадке, тем очевиднее становится:
-                    её собственные тайны тоже не останутся в тени.</p>
-                <img src="images/горничная.jpg" alt="сидни свинка" class="article-img">
-            </article>
-        </section>
-            
-            <section id ="otzyv">
-            <h2>Отзыв на фильм</h2>
-            <article>
-                <p>«Горничная» цепляет не только сюжетом, а вопросом, который остаётся после титров:
-можно ли очистить чужой дом, не запачкавшись самому?
-Напряжение держится до конца фильма, а Сидни Суини превращает историю уборки в попытку искупления. Очень интересно был развёрнут сюжет, казалось бы "идеальная картинка" мужчины, но не всё так просто и каждый имеет свои секреты.
-                    <br><br>9/10. (Он не отвернулся на сцене с Сидни Суини.)</p>
-            </article>
-        </section>
+<main>
 
-        
-        <aside>
-            <section id = "cytaty">
-                <h3>Цитаты</h3>
-                <blockquote>
-                    <p>«Иметь зубы — это привилегия!»</p>
-                    <cite>— Мисисс Винчестер</cite>
-                </blockquote>
-                <blockquote>
-                    <p>«Действия имеют последствия, Эндрю»</p>
-                    <cite>— Нина</cite>
-                </blockquote>
-                <blockquote>
-                    <p>«Мне, чёрт возьми, нужен сэндвич»</p>
-                    <cite>— Милли</cite>
-                </blockquote>
-            </section>
-        </aside>
-
-        <section id = "rpl">
-            <h2>Расписание матчей команды</h2>
-            <table>
-                <caption>Локомотив</caption>
-                <thead>
-                    <tr>
-                        <th>Команда</th>
-                        <th>Счёт</th>
-                        <th>Время проведения</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Локомотив - Чэнду Жунчэн</td>
-                        <td>4 : 0</td>
-                        <td>20.01 16:00 Вт </td>
-                    </tr>
-                    <tr>
-                        <td>Локомотив - Ростов</td>
-                        <td>1 : 1</td>
-                        <td>24.01 15:30 Cб</td>
-                    </tr>
-                    <tr>
-                        <td>Локомотив - Ноа</td>
-                        <td>2 : 0</td>
-                        <td>31.01 16:00 Cб</td>
-                    </tr>
-                    <tr>
-                        <td>Локомотив - Урал</td>
-                        <td>3 : 2</td>
-                        <td>05.02 15:30 Чт</td>
-                    </tr>
-                    <tr>
-                        <td>Локомотив - Урарту</td>
-                        <td>3 : 2</td>
-                        <td>08.02 11:00 Вс</td>
-                    </tr>
-                    <tr>
-                        <td>Локомотив - Елимай</td>
-                        <td>2 : 0</td>
-                        <td>08.02 15:30 Вс</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
-
-    <footer>
-        <div class="grid" style="max-width:1200px; margin:0 auto;">
-            <div>
-                <h4>Контакты</h4>
-                <address>
-                    <p>Instagram: @flymistry</p>
-                    <p>Телефон: +7 (999) 999 - 99 - 99</p>
-                    <p>Адрес: ул. Пушкина д. Колотушкина</p>
-                </address>
-            </div>
+    <section id="jokes" class="section">
+        <div class="hero">
+            <h1>Случайная шутка</h1>
+            <p>Нажми кнопку, чтобы получить новую шутку</p>
         </div>
-    </footer>
+        <div class="section-content centered">
+            <button onclick="getJoke()" class="btn">Получить шутку</button>
+            <div id="jokeResult" class="result-area"></div>
+        </div>
+    </section>
+
+    <section id="weather" class="section hidden">
+        <div class="hero">
+            <h1>Погода сейчас</h1>
+            <p>Введите координаты, чтобы увидеть погоду</p>
+        </div>
+        <div class="section-content form-column">
+            <input type="number" id="latitude" placeholder="Широта (например, 48.21)">
+            <input type="number" id="longitude" placeholder="Долгота (например, 16.37)">
+            <button onclick="getWeather()" class="btn">Получить погоду</button>
+        </div>
+        <div id="weatherResult" class="result-area"></div>
+    </section>
+
+    <section id="currency" class="section hidden">
+        <div class="hero">
+            <h1>Конвертер валют</h1>
+        </div>
+        <div class="section-content form-column">
+            <input type="number" id="currencyAmount" placeholder="Сумма" value="100">
+            <select id="currencyFrom">
+                <option value="USD">USD — Доллар США</option>
+                <option value="EUR">EUR — Евро</option>
+                <option value="GBP">GBP — Фунт стерлингов</option>
+                <option value="UAH">UAH — Гривна</option>
+                <option value="RUB">RUB — Рубль</option>
+                <option value="PLN">PLN — Злотый</option>
+                <option value="CHF">CHF — Франк</option>
+                <option value="JPY">JPY — Иена</option>
+            </select>
+            <select id="currencyTo">
+                <option value="EUR">EUR — Евро</option>
+                <option value="USD">USD — Доллар США</option>
+                <option value="GBP">GBP — Фунт стерлингов</option>
+                <option value="UAH">UAH — Гривна</option>
+                <option value="RUB">RUB — Рубль</option>
+                <option value="PLN">PLN — Злотый</option>
+                <option value="CHF">CHF — Франк</option>
+                <option value="JPY">JPY — Иена</option>
+            </select>
+            <button onclick="convertCurrency()" class="btn">Конвертировать</button>
+        </div>
+        <div id="currencyResult" class="result-area"></div>
+    </section>
+
+    <section id="books" class="section hidden">
+        <div class="hero">
+            <h1>Книги Стивена Кинга</h1>
+            <p>Загрузи список книг через API</p>
+        </div>
+        <div class="section-content centered">
+            <button onclick="getBooks()" class="btn">Загрузить список книг</button>
+        </div>
+        <div id="booksResult" class="result-area"></div>
+    </section>
+
+    <section id="dogs" class="section hidden">
+        <div class="hero">
+            <h1>Случайные собаки</h1>
+            <p>Нажми кнопку, чтобы увидеть новую собаку</p>
+        </div>
+        <div class="section-content centered">
+            <button onclick="getRandomDog()" class="btn">Показать собаку</button>
+            <div id="dogResult" class="result-area"></div>
+        </div>
+    </section>
+
+    <section id="threads" class="section hidden">
+        <div class="hero">
+            <h1>Обсуждения</h1>
+            <p>Создавай посты, редактируй и удаляй йоу</p>
+    </div>
+
+    <div class="section-content" style="max-width: 800px; margin: 0 auto;">
+        <div class="form-column" style="margin-bottom: 2rem;">
+            <input type="text" id="new-title" placeholder="Заголовок обсуждения" maxlength="120">
+            <textarea id="new-body" placeholder="Текст обсуждения..." rows="4"></textarea>
+            <button onclick="createThread()" class="btn" id="publishBtn">Опубликовать</button>
+        </div>
+
+        <button onclick="loadThreads()" class="btn" style="margin-bottom: 1.5rem; width: 100%;">
+            Загрузить обсуждения (GET)
+        </button>
+
+        <div id="threads-list" class="result-area"></div>
+        <div id="threads-status"></div>
+    </div>
+</section>
+
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>
